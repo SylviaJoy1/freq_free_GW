@@ -285,7 +285,7 @@ class GW(lib.StreamObject):
             GW eigenvectors in 1p+1h+2p1h+2h1p space
     '''
     def __init__(self, mf, frozen=None, diagonal=False, mo_coeff=None, mo_occ=None):
-        assert(isinstance(mf, scf.ghf.GHF) or isinstance(mf, dft.gks.GKS) or isinstance(mf, dft.rks.RKS) or isinstance(mf,scf.hf.SCF))
+        assert(isinstance(mf, dft.rks.RKS) or isinstance(mf,scf.hf.SCF))
         if mo_coeff  is None: mo_coeff  = mf.mo_coeff
         if mo_occ    is None: mo_occ    = mf.mo_occ
 
@@ -575,7 +575,7 @@ def _make_eris_incore(mygw, mo_coeff=None, ao2mofn=None):
     
     #from dfccsd
     def _init_df_eris():
-        with_df = df.DF(mf.mol, auxbasis='def2-SVP-JKFIT' )
+        with_df = df.DF(mf.mol)
         naux = with_df.get_naoaux()        
         Loo = numpy.empty((naux,nocc,nocc))
         Lov = numpy.empty((naux,nocc,nvir))
